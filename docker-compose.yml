@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+    db:
+        image: mysql
+        container_name: db_api_task
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: api_task
+            MYSQL_USER: symfony
+            MYSQL_PASSWORD: mypassword
+        volumes:
+            - db-data:/var/lib/mysql
+        networks:
+            - dev
+
+    phpmyadmin:
+        image: phpmyadmin
+        container_name: phpmyadmnin_api_task
+        restart: always
+        depends_on:
+            - db
+        ports:
+            - 8080:80
+        environment:
+            PMA_HOST: db
+        networks:
+            - dev
+
+    www:
+        build: docker
+        container_name: www_api_task
+        restart: always
+        ports:
+            - "8000:80"
+        volumes:
+            - ./docker/vhosts:/etc/apache2/sites-enabled
+            - ./:/var/www
+        networks:
+            - dev
+
+networks:
+    dev:
+
+volumes:
+    db-data:

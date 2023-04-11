@@ -1,0 +1,10 @@
+parameters:
+    paths:
+        - src
+        - tests
+    checkGenericClassInNonGenericObjectType: true
+    checkMissingIterableValueType: true
+    level: 9
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors: 
+        - '#Interface Gedmo\\Sluggable\\Sluggable is not an Attribute class.#'
